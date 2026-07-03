@@ -1,0 +1,198 @@
+schema_version: 1
+
+context:
+  version: 3.0.1
+  # dependencies
+  gds_base_version: 3.0.1
+  gds_lsmp_version: 3.0.1
+  gds_frameio_version: 3.0.1
+  ldas_tools_framecpp_version: 2.5.8
+
+recipe:
+  name: gds-dmt
+  version: ${{ version }}
+
+source:
+  url: https://software.igwn.org/sources/source/gds-dmt-${{ version }}.tar.gz
+  sha256: a30b770452c14faf469586e4c522615cfb96454d5a1c4f34210d00afc477bffb
+  patches:
+    - fix-datenv-link.patch
+
+build:
+  number: 11
+  skip: win
+
+outputs:
+  - staging:
+      name: gds-dmt-build
+    requirements:
+      build:
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib('c') }}
+        - autoconf
+        - automake
+        - gnuconfig
+        - libtool
+        - make
+        - pkg-config
+      host:
+        - gds-base >=${{ gds_base_version }}
+        - gds-base-gdstrig >=${{ gds_base_version }}
+        - gds-base-monitors >=${{ gds_base_version }}
+        - gds-frameio-base >=${{ gds_frameio_version }}
+        - gds-lsmp >=${{ gds_lsmp_version }}
+        - gds-services >=${{ gds_base_version }}
+        - jsoncpp
+        - ldas-tools-al
+        - ldas-tools-framecpp >=${{ ldas_tools_framecpp_version }}
+        - libboost-headers
+        - root_base
+        - root_cxx_standard
+
+  - package:
+      name: gds-dmt-base
+    inherit:
+      from: gds-dmt-build
+      run_exports: false
+    build:
+      files:
+        - include/gds/calc_engine/
+        - lib/libcalcengn.*
+        - lib/pkgconfig/gdsdmtcalcengine.pc
+    requirements:
+      build:
+        - ${{ compiler("cxx") }}
+        - ${{ stdlib("c") }}
+      run_exports:
+        - ${{ pin_subpackage("gds-dmt-base", upper_bound="x") }}
+    tests:
+      - package_contents:
+          include:
+            - gds/calc_engine/engine.hh
+          lib:
+            - calcengn
+      - requirements:
+          run:
+            - pkg-config
+        script:
+          - pkg-config --print-errors --exact-version "${{ version }}" gdsdmtcalcengine
+    about:
+      summary: GDS DMT package Core libraries
+      homepage: https://computing.docs.ligo.org/daswgweb/projects/dmt.html
+
+  - package:
+      name: gds-dmt-monitors
+    inherit:
+      from: gds-dmt-build
+      run_exports: false
+    build:
+      files:
+        - bin/DMTGen
+        - include/gds/generator/
+        - include/gds/osc/
+        - include/gds/CalibChan.hh
+        - include/gds/DMTBase.hh
+        - include/gds/DMTServer.hh
+        - include/gds/DatEnv.hh
+        - include/gds/DynConfig.hh
+        - include/gds/FDCalibrate.hh
+        - include/gds/FDEasyCalibrate.hh
+        - include/gds/FilterDB.hh
+        - include/gds/FilterModule.hh
+        - include/gds/GDSPlot.hh
+        - include/gds/GridWare.hh
+        - include/gds/IfoResponse.hh
+        - include/gds/LscCalib.hh
+        - include/gds/LscEmul.hh
+        - include/gds/LscPdBackout.hh
+        - include/gds/MultiStream.hh
+        - include/gds/OperStateCondList.hh
+        - include/gds/PSD.hh
+        - include/gds/TrigEnv.hh
+        - include/gds/marker.hh
+        - include/gds/plot_pars.hh
+        - lib/libdmtenv.*
+        - lib/libezcalib.*
+        - lib/libgds_plotpkg.*
+        - lib/libgenerator.*
+        - lib/liblscemul.*
+        - lib/libosc.*
+        - lib/pkgconfig/gdsdmtenv.pc
+        - lib/pkgconfig/gdsdmtezcalib.pc
+        - lib/pkgconfig/gdsdmtosc.pc
+        - lib/pkgconfig/gdsplotpkg.pc
+    requirements:
+      build:
+        - ${{ compiler("cxx") }}
+        - ${{ stdlib("c") }}
+      host:
+        - gds-base >=${{ gds_base_version }}
+        - gds-base-gdstrig >=${{ gds_base_version }}
+        - ${{ pin_subpackage('gds-dmt-base', exact=True) }}
+        - gds-frameio-base >=${{ gds_frameio_version }}
+        - gds-lsmp
+        - gds-services >=${{ gds_base_version }}
+        - jsoncpp
+        - ldas-tools-al
+        - ldas-tools-framecpp
+        - root_base
+        - root_cxx_standard
+      run:
+        - gds-services >=${{ gds_base_version }}
+      run_exports:
+        - ${{ pin_subpackage("gds-dmt-monitors", upper_bound="x") }}
+      ignore_run_exports:
+        by_name:
+          - if: osx
+            then: gds-lsmp
+          - gds-services
+    tests:
+      - package_contents:
+          include:
+            - gds/GDSPlot.hh
+          lib:
+            - dmtenv
+      - requirements:
+          run:
+            - pkg-config
+        script:
+          - pkg-config --print-errors --exact-version "${{ version }}" gdsdmtenv
+          - pkg-config --print-errors --exact-version "${{ version }}" gdsdmtezcalib
+          - pkg-config --print-errors --exact-version "${{ version }}" gdsdmtosc
+          - pkg-config --print-errors --exact-version "${{ version }}" gdsplotpkg
+    about:
+      summary: Libraries used by DMT Monitor programs
+      homepage: https://computing.docs.ligo.org/daswgweb/projects/dmt.html
+
+  - package:
+      name: gds-dmt-root
+    inherit:
+      from: gds-dmt-build
+      run_exports: false
+    build:
+      files:
+        - share/gds/macros/
+        - share/gds/.rootrc
+        - share/gds/root-version
+    requirements:
+      build:
+        - ${{ compiler("cxx") }}
+        - ${{ stdlib("c") }}
+    tests:
+      - package_contents:
+          files:
+            - share/gds/macros/rootlogon.C
+    about:
+      summary: Root wrapper for gds classes
+      homepage: https://computing.docs.ligo.org/daswgweb/projects/dmt.html
+
+about:
+  license: GPL-2.0-only
+  license_file: COPYING
+  summary: LIGO Global Diagnostics System
+  homepage: https://computing.docs.ligo.org/daswgweb/projects/dmt.html
+
+extra:
+  recipe-maintainers:
+    - duncanmmacleod
+    - emaros
