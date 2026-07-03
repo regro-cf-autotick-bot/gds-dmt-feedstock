@@ -1,17 +1,8 @@
-About gds-dmt-feedstock
-=======================
+About gds-dmt-base-feedstock
+============================
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gds-dmt-feedstock/blob/main/LICENSE.txt)
 
-
-About gds-dmt
--------------
-
-Home: https://computing.docs.ligo.org/daswgweb/projects/dmt.html
-
-Package license: GPL-2.0-only
-
-Summary: LIGO Global Diagnostics System
 
 About gds-dmt-base
 ------------------
@@ -44,14 +35,7 @@ Current build status
 ====================
 
 
-<table><tr>
-    <td>GitHub Actions</td>
-    <td>
-      <a href="https://github.com/conda-forge/gds-dmt-feedstock/actions/workflows/conda-build.yml">
-        <img src="https://github.com/conda-forge/gds-dmt-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
-      </a>
-    </td>
-  </tr>
+<table>
     
   <tr>
     <td>Azure</td>
@@ -65,6 +49,41 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
+              <td>linux_64_root_base6.36.10root_cxx_standard20</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21053&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gds-dmt-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_root_base6.36.10root_cxx_standard20" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_root_base6.38.4root_cxx_standard20</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21053&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gds-dmt-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_root_base6.38.4root_cxx_standard20" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_root_base6.38.4root_cxx_standard23</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21053&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gds-dmt-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_root_base6.38.4root_cxx_standard23" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_root_base6.40.0root_cxx_standard20</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21053&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gds-dmt-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_root_base6.40.0root_cxx_standard20" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_64_root_base6.40.0root_cxx_standard23</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21053&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/gds-dmt-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_root_base6.40.0root_cxx_standard23" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
               <td>osx_64_root_base6.36.10root_cxx_standard20</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21053&branchName=main">
@@ -151,10 +170,10 @@ Current release info
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gds--dmt--monitors-green.svg)](https://anaconda.org/conda-forge/gds-dmt-monitors) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gds-dmt-monitors.svg)](https://anaconda.org/conda-forge/gds-dmt-monitors) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gds-dmt-monitors.svg)](https://anaconda.org/conda-forge/gds-dmt-monitors) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gds-dmt-monitors.svg)](https://anaconda.org/conda-forge/gds-dmt-monitors) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-gds--dmt--root-green.svg)](https://anaconda.org/conda-forge/gds-dmt-root) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gds-dmt-root.svg)](https://anaconda.org/conda-forge/gds-dmt-root) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gds-dmt-root.svg)](https://anaconda.org/conda-forge/gds-dmt-root) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gds-dmt-root.svg)](https://anaconda.org/conda-forge/gds-dmt-root) |
 
-Installing gds-dmt
-==================
+Installing gds-dmt-base
+=======================
 
-Installing `gds-dmt` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `gds-dmt-base` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
@@ -240,17 +259,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating gds-dmt-feedstock
-==========================
+Updating gds-dmt-base-feedstock
+===============================
 
-If you would like to improve the gds-dmt recipe or build a new
+If you would like to improve the gds-dmt-base recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/gds-dmt-feedstock are
+Note that all branches in the conda-forge/gds-dmt-base-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks, and branches in the main repository should only be used to
 build distinct package versions.
